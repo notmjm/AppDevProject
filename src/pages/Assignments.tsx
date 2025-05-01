@@ -11,7 +11,7 @@ function Assignments(){
 
   useEffect(() => {
     const fetchAssignments = async () => {
-      const res = await fetch("http://localhost:5173/api/assignments");
+      const res = await fetch("http://localhost:5173/assignments");
       const data = await res.json();
       setAssignments(data);
     };

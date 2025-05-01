@@ -14,7 +14,7 @@ function Practice(){
 
   const fetchRandomProblem = async () => {
     try {
-      const res = await fetch("http://localhost:5173/api/practice");
+      const res = await fetch("http://localhost:5173/practice");
       const data = await res.json();
       setProblem(data);
     } catch (error) {

@@ -28,29 +28,46 @@ function App() {
   }
 
   return (
-    <>
-      <div>
-        <a href="/Dashboard">
-          <h2>BaseCamp</h2>
-        </a>
-        <a href="https://github.com/KiberVG/bootcampspring2025code/tree/main" target="_blank">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
-            alt="Instructional GitHub"
-          />
-        </a>
-        <nav>
-          <button onClick={() => setCurrentPage("dashboard")}>Home</button>
-          <button onClick={() => setCurrentPage("assignments")}>
-            Assignments
-          </button>
-          <button onClick={() => setCurrentPage("practice")}>Practice</button>
-          <button onClick={() => setCurrentPage("resources")}>Resources</button>
-        </nav>
-        {renderPage()}
-      </div>
-    </>
-  );
+    <Router>
+    <div>
+      <Link to="/dashboard">
+        <h2>BaseCamp</h2>
+      </Link>
+      <a
+        href="https://github.com/KiberVG/bootcampspring2025code/tree/main"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
+          alt="Instructional GitHub"
+        />
+      </a>
+      <nav>
+        <Link to="/dashboard">
+          <button>Home</button>
+        </Link>
+        <Link to="/assignments">
+          <button>Assignments</button>
+        </Link>
+        <Link to="/practice">
+          <button>Practice</button>
+        </Link>
+        <Link to="/resources">
+          <button>Resources</button>
+        </Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/assignments" element={<Assignments />} />
+        <Route path="/practice" element={<Practice />} />
+        <Route path="/resources" element={<Resources />} />
+      </Routes>
+    </div>
+  </Router>
+);
 }
 
 
