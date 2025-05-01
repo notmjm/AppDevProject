@@ -4,16 +4,18 @@ import Assignments from "./pages/Assignments.tsx";
 import Practice from "./pages/Practice.tsx";
 import Resources from "./pages/Resources.tsx";
 
+
 import "./App.css";
 
+
 function App() {
-  const [currentPage, setCurrentPage] = useState("dashboard");
+ const [currentPage, setCurrentPage] = useState("dashboard");
 
 
-  function renderPage() {
-    switch (currentPage) {
-      case "dashboard":
-        return (
+ function renderPage() {
+   switch (currentPage) {
+     case "dashboard":
+       return (
          <div className="dashboard-container">
            <h2>Welcome to BaseCamp!</h2>
            <h3>Your Launchpad for Coding Success. Easy access to everything you need for ADC Bootcamp!</h3>
@@ -48,16 +50,17 @@ function App() {
            </div>
          </div>
        );
-      case "assignments":
-        return <Assignments />;
-      case "practice":
-        return <Practice />;
-      case "resources":
-        return <Resources />;
-      default:
-        return <Dashboard />;
-    }
-  }
+     case "assignments":
+       return <Assignments />;
+     case "practice":
+       return <Practice />;
+     case "resources":
+       return <Resources />;
+     default:
+       return <Dashboard />;
+   }
+ }
+
 
  return (
    <div>
@@ -65,6 +68,14 @@ function App() {
        <a href="/Dashboard" className="title-link">
          <h2>BaseCamp</h2>
        </a>
+     </div>
+
+
+     <nav>
+       <button onClick={() => setCurrentPage("dashboard")}>Home</button>
+       <button onClick={() => setCurrentPage("assignments")}>Assignments</button>
+       <button onClick={() => setCurrentPage("practice")}>Practice</button>
+       <button onClick={() => setCurrentPage("resources")}>Resources</button>
        <a
          href="https://github.com/KiberVG/bootcampspring2025code/tree/main"
          target="_blank"
@@ -76,14 +87,6 @@ function App() {
            className="github-logo"
          />
        </a>
-     </div>
-
-
-     <nav>
-       <button onClick={() => setCurrentPage("dashboard")}>Home</button>
-       <button onClick={() => setCurrentPage("assignments")}>Assignments</button>
-       <button onClick={() => setCurrentPage("practice")}>Practice</button>
-       <button onClick={() => setCurrentPage("resources")}>Resources</button>
      </nav>
 
 
@@ -92,6 +95,5 @@ function App() {
  );
 }
 
+
 export default App;
-
-
