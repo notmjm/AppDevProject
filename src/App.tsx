@@ -37,12 +37,12 @@ function App() {
           />
         </a>
         <nav>
-          <button onClick={() => setCurrentPage("dashboard")}>Home</button>
-          <button onClick={() => setCurrentPage("assignments")}>
+          <button onClick={() => setCurrentPage("Dashboard")}>Home</button>
+          <button onClick={() => setCurrentPage("Assignments")}>
             Assignments
           </button>
-          <button onClick={() => setCurrentPage("practice")}>Practice</button>
-          <button onClick={() => setCurrentPage("resources")}>Resources</button>
+          <button onClick={() => setCurrentPage("Practice")}>Practice</button>
+          <button onClick={() => setCurrentPage("Resources")}>Resources</button>
         </nav>
         {renderPage()}
       </div>
