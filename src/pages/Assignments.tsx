@@ -46,7 +46,7 @@ function Assignments(){
 
   return (
     <div>
-      <h1>Assignments</h1>
+      <h3>Assignments</h3>
       <ul>
         {assignments.map((assignment) => (
           <li key={assignment._id || assignment.name}>
