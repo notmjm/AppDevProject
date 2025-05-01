@@ -20,7 +20,7 @@ function Assignments(){
 
   return (
     <div>
-      <h3>Assignments</h3>
+      <h1>Assignments</h1>
       <ul>
         {assignments.map((assignment, index) => (
           <li key={index}>
