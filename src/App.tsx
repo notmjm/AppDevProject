@@ -1,36 +1,12 @@
-import { useState, useEffect } from "react";
-import Dashboard from "./pages/Dashboard.tsx";
-import Assignments from "./pages/Assignments.tsx";
-import Practice from "./pages/Practice.tsx";
-import Resources from "./pages/Resources.tsx";
+import { useState } from "react";
+import Dashboard from "./pages/Dashboard";
+import Assignments from "./pages/Assignments";
+import Practice from "./pages/Practice";
+import Resources from "./pages/Resources";
 import "./App.css";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("dashboard");
-  const [isNavVisible, setIsNavVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  useEffect(() => {
-    const controlNavbar = () => {
-      if (currentPage !== "dashboard") {
-        if (window.scrollY > lastScrollY) { // scroll down
-          setIsNavVisible(false);
-        } else { // scroll up
-          setIsNavVisible(true);
-        }
-        setLastScrollY(window.scrollY);
-      } else {
-        setIsNavVisible(true);
-      }
-    };
-
-    window.addEventListener('scroll', controlNavbar);
-
-    // cleanup function
-    return () => {
-      window.removeEventListener('scroll', controlNavbar);
-    };
-  }, [lastScrollY, currentPage]);
 
   function renderPage() {
     switch (currentPage) {
@@ -49,20 +25,15 @@ function App() {
 
   return (
     <div>
+      {/* Header stays at top */}
       <div className="header">
-        <a href="/Dashboard" className="title-link">
+        <a href="/" className="title-link">
           <h2>BaseCamp</h2>
         </a>
       </div>
 
-      <nav style={{
-        position: 'sticky',
-        top: 0,
-        transition: 'transform 0.3s ease-in-out',
-        transform: isNavVisible ? 'translateY(0)' : 'translateY(-100%)',
-        backgroundColor: 'white', // Add your preferred background color
-        zIndex: 1000
-      }}>
+      {/* Navigation bar (no scroll behavior) */}
+      <nav>
         <button onClick={() => setCurrentPage("dashboard")}>Home</button>
         <button onClick={() => setCurrentPage("assignments")}>Assignments</button>
         <button onClick={() => setCurrentPage("practice")}>Practice</button>
@@ -80,7 +51,8 @@ function App() {
         </a>
       </nav>
 
-      {renderPage()}
+      {/* Main content */}
+      <div className="main-content">{renderPage()}</div>
     </div>
   );
 }

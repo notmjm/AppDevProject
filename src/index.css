@@ -1,89 +1,42 @@
-nav {
-  position: fixed;
-  top: 125px; /* Adjust this based on the height of your title (header) */
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
- }
-
- img {
-  width: 50px;
-  height: 50px;
- }
- 
- 
- :root {
+:root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
- 
- 
   color-scheme: light dark;
   color: rgba(0, 0, 0, 0.87);
   background-color: white;
- 
- 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
- }
- 
- 
- a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
- }
- a:hover {
-  color: #535bf2;
- }
- 
- .header {
-  position: fixed;
-  top: 20px; /* Adjust this value to set how far the title is from the top */
-  left: 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 10px;
 }
 
-.title-link {
+body {
+  margin: 0;
+  padding: 0;
   display: flex;
-  align-items: center;
-  font-size: 1.5rem;
-  text-decoration: none;
-}
-
-.github-logo {
-  width: 30px;
-  height: 30px;
-}
-
- 
- body {
-  margin-top:20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
   min-width: 320px;
   min-height: 100vh;
- }
- 
- 
- h1 {
+  background-color: white;
+}
+
+a {
+  font-weight: 500;
+  color: #4a68ff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
   font-size: 3.2em;
   line-height: 1.1;
- }
- 
- 
- button {
+}
+
+button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -91,58 +44,36 @@ nav {
   font-weight: 500;
   font-family: inherit;
   background-color: #0d76e7;
+  color: white;
   cursor: pointer;
   transition: border-color 0.25s;
- }
- button:hover {
+}
+
+button:hover {
   border-color: #646cff;
- }
- button:focus,
- button:focus-visible {
+}
+
+button:focus,
+button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
- }
- 
-
- .card {
-  background: #f9f9f9;
-  border: 2px solid #ccc; /* <-- This adds the border */
-  border-radius: 12px;
-  padding: 1.5rem;
-  width: 250px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  cursor: pointer;
-  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.card:hover {
-  transform: scale(1.03);
-  border-color: #646cff; /* Optional: color changes on hover */
+img {
+  width: 50px;
+  height: 50px;
 }
 
-.card-grid {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-}
-
-.dashboard-container {
-  margin-top: 60px;
-  text-align: center;
-  padding: 2rem;
-}
-
- 
- @media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: light) {
   :root {
     color: #0076dd;
     background-color: #ffffff;
   }
+
   a:hover {
-    color: #747bff;
+    color: #0076dd;
   }
+
   button {
     background-color: #f9f9f9;
   }
- }
+}
