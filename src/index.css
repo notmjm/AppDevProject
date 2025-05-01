@@ -1,7 +1,13 @@
 nav {
+  position: fixed;
+  top: 125px; /* Adjust this based on the height of your title (header) */
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: center;
+  margin-bottom: 30px;
  }
+
  img {
   width: 50px;
   height: 50px;
@@ -36,11 +42,15 @@ nav {
  }
  
  .header {
+  position: fixed;
+  top: 20px; /* Adjust this value to set how far the title is from the top */
+  left: 0;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
 }
 
 .title-link {
@@ -57,7 +67,7 @@ nav {
 
  
  body {
-  margin: 0;
+  margin-top:20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,6 +78,7 @@ nav {
  
  
  h1 {
+  margin-top: 20px;
   font-size: 3.2em;
   line-height: 1.1;
  }
@@ -92,6 +103,38 @@ nav {
   outline: 4px auto -webkit-focus-ring-color;
  }
  
+
+ .card {
+  background: #f9f9f9;
+  border: 2px solid #ccc; /* <-- This adds the border */
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 250px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  border-color: #646cff; /* Optional: color changes on hover */
+}
+
+.card-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.dashboard-container {
+  
+  margin-top: 100px;
+  text-align: center;
+  padding: 2rem;
+}
+
  
  @media (prefers-color-scheme: light) {
   :root {

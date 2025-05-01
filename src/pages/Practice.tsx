@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 
 interface Problem {
+  id: string,
   title: string;
   difficulty: string;
   description: string;
@@ -11,18 +12,23 @@ interface Problem {
 function Practice(){
   const [problem, setProblem] = useState<Problem | null>(null);
 
-  const getRandomProblem = async () => {
-    const res = await fetch("http://localhost:3001/api/random-problem");
-    const data = await res.json();
-    setProblem(data);
-  }
+  const fetchRandomProblem = async () => {
+    try {
+      const res = await fetch("http://localhost:5173/practice");
+      const data = await res.json();
+      setProblem(data);
+    } catch (error) {
+      console.error("Error fetching problem:", error);
+    }
+  };
 
   return (
     <div>
       <h1>Practice Problems</h1>
-      <button onClick={getRandomProblem}>Generate Random Problem</button>
+      <button onClick={fetchRandomProblem}>Get Random Problem</button>
+
       {problem && (
-        <div>
+        <div style={{ border: "1px solid #ccc", marginTop: "20px", padding: "10px" }}>
           <h2>{problem.title}</h2>
           <p><strong>Difficulty:</strong> {problem.difficulty}</p>
           <p>{problem.description}</p>
