@@ -9,7 +9,6 @@ type resource = {
 };
 
 
-
 const Resources = () => {
   const [resources, setResources] = useState<resource[]>([]);
 
