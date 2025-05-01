@@ -1,39 +1,39 @@
+// import React from 'react';
 import React, { useEffect, useState } from 'react';
 
+interface Resource {
+  name: string;
+  url: string;
+}
 
-const API_URL = "http://localhost:8000";
+function Resources() {
+  const [resources, setResources] = useState<Resource[]>([]); // plural!
 
-type resource = {
-  title: string;
-  link: string;
-};
-
-
-
-const Resources = () => {
-  const [resources, setResources] = useState<resource[]>([]);
-
-useEffect(  () => {
-
-    fetch(`${API_URL}/resources`)
-      .then((res) => res.json())
-      .then((data) => setResources(data));
+  useEffect(() => {
+    const fetchResources = async () => {
+      const res = await fetch("http://localhost:5173/resources"); // added /api/
+      const data = await res.json();
+      setResources(data);
+    };
+    fetchResources();
   }, []);
 
   return (
-    <>
-    <div className="resources-list">
-        {resources.map((resource) => (
-          <div className="resource">
-            <h3>{resource.title}</h3>
-            <p>{resource.link}</p>
-          </div>
+    <div>
+      <h1>Resources</h1>
+      <ul>
+        {resources.map((res: Resource, index: number) => (
+          <li key={index}>
+            <a href={res.name} target="_blank" rel="noopener noreferrer">
+              {res.url}
+            </a>
+          </li>
         ))}
-      </div>
-    </>
-   
+      </ul>
+    </div>
   );
-};
-
+}
 export default Resources;
+
+
 
