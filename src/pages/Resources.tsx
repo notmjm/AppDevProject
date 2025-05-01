@@ -1,21 +1,24 @@
 // import React from 'react';
 import React, { useEffect, useState } from 'react';
 
-interface Resource {
-  name: string;
-  url: string;
-}
 
-function Resources() {
-  const [resources, setResources] = useState<Resource[]>([]); // plural!
+const API_URL = "http://localhost:8000";
 
-  useEffect(() => {
-    const fetchResources = async () => {
-      const res = await fetch("http://localhost:5173/api/resources"); // added `/api/`
-      const data = await res.json();
-      setResources(data);
-    };
-    fetchResources();
+type resource = {
+  title: string;
+  link: string;
+};
+
+
+
+const Resources = () => {
+  const [resources, setResources] = useState<resource[]>([]);
+
+useEffect(  () => {
+
+    fetch(`${API_URL}/resources`)
+      .then((res) => res.json())
+      .then((data) => setResources(data));
   }, []);
 
   return (
