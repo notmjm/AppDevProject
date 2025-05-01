@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface Problem {
   title: string;
@@ -181,6 +181,14 @@ const problems: Problem[] = [
 function Practice() {
   const [problem, setProblem] = useState<Problem | null>(null);
   const [loading, setLoading] = useState(false);
+  const [completedProblems, setCompletedProblems] = useState<Set<string>>(() => {
+    const saved = localStorage.getItem('completedProblems');
+    return new Set(saved ? JSON.parse(saved) : []);
+  });
+
+  useEffect(() => {
+    localStorage.setItem('completedProblems', JSON.stringify([...completedProblems]));
+  }, [completedProblems]);
 
   const fetchRandomProblem = () => {
     setLoading(true);
@@ -191,9 +199,39 @@ function Practice() {
     }, 500);
   };
 
+  const toggleProblemCompletion = (title: string) => {
+    const newCompleted = new Set(completedProblems);
+    if (newCompleted.has(title)) {
+      newCompleted.delete(title);
+    } else {
+      newCompleted.add(title);
+    }
+    setCompletedProblems(newCompleted);
+  };
+
+  const progressPercentage = (completedProblems.size / problems.length) * 100;
+
   return (
     <div>
       <h1>Practice Problems</h1>
+      
+      {/* Progress Bar */}
+      <div style={{ 
+        width: '100%', 
+        backgroundColor: '#e0e0e0', 
+        borderRadius: '10px',
+        marginBottom: '20px'
+      }}>
+        <div style={{
+          width: `${progressPercentage}%`,
+          backgroundColor: '#4CAF50',
+          height: '20px',
+          borderRadius: '10px',
+          transition: 'width 0.3s ease-in-out'
+        }} />
+      </div>
+      <p>Progress: {completedProblems.size} of {problems.length} completed ({progressPercentage.toFixed(1)}%)</p>
+
       <button onClick={fetchRandomProblem} disabled={loading}>
         {loading ? "Loading..." : "Get Random Problem"}
       </button>
@@ -203,11 +241,64 @@ function Practice() {
           <h2>{problem.title}</h2>
           <p><strong>Difficulty:</strong> {problem.difficulty}</p>
           <p>{problem.description}</p>
-          <a href={problem.url} target="_blank" rel="noreferrer">
-            Go to Problem
-          </a>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <a href={problem.url} target="_blank" rel="noreferrer">
+              Go to Problem
+            </a>
+            <button 
+              onClick={() => toggleProblemCompletion(problem.title)}
+              style={{
+                backgroundColor: completedProblems.has(problem.title) ? '#4CAF50' : '#f0f0f0',
+                color: completedProblems.has(problem.title) ? 'white' : 'black',
+                border: 'none',
+                padding: '8px 16px',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}
+            >
+              {completedProblems.has(problem.title) ? 'Completed ✓' : 'Mark as Complete'}
+            </button>
+          </div>
         </div>
       )}
+
+      {/* Problem List with Completion Status */}
+      <div style={{ marginTop: '30px' }}>
+        <h2>All Problems</h2>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gap: '15px' 
+        }}>
+          {problems.map((p) => (
+            <div 
+              key={p.title}
+              style={{ 
+                border: '1px solid #ccc',
+                padding: '10px',
+                borderRadius: '5px',
+                backgroundColor: completedProblems.has(p.title) ? '#e8f5e9' : 'white'
+              }}
+            >
+              <h3 style={{ margin: '0 0 10px 0' }}>{p.title}</h3>
+              <p style={{ margin: '5px 0' }}><strong>Difficulty:</strong> {p.difficulty}</p>
+              <button 
+                onClick={() => toggleProblemCompletion(p.title)}
+                style={{
+                  backgroundColor: completedProblems.has(p.title) ? '#4CAF50' : '#f0f0f0',
+                  color: completedProblems.has(p.title) ? 'white' : 'black',
+                  border: 'none',
+                  padding: '5px 10px',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }}
+              >
+                {completedProblems.has(p.title) ? 'Completed ✓' : 'Mark as Complete'}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
