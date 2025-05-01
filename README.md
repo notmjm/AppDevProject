@@ -1,6 +1,6 @@
 # BaseCamp
 
-Simple dashboard that allows bootcamp members to access homework, students to mark them as complete, and everyone to access readings, recordings, and practice problems.  
+Simple dashboard that allows bootcamp members to access homework and access readings, recordings, and practice problems.  
 
 ## Features
 
