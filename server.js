@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url'; // Missing import
 // Initialize Express app
 const app = express();
 const port = process.env.PORT || 5173;
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5173" }));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -89,7 +89,6 @@ app.use((req, res, next) => {
 // Handle application shutdown
 process.on('SIGINT', async () => {
   if (client) {
-    await client.close();
     console.log('MongoDB connection closed');
   }
   process.exit(0);
@@ -134,39 +133,19 @@ app.get("/dashboard", async (req, res) => {
   }
 });
 
-app.get("/assignments", async (req, res) => {
+app.get('/api/assignments', async (req, res) => {
   try {
-    await client.connect();
-    const db = client.db(databaseAndAssignmentsCollection.db);
-    const collection = db.collection(databaseAndAssignmentsCollection.collection);
+    const db = await connectDB(); // Connect to DB
+    const collection = db.collection('assignments'); // Assuming 'assignments' is your collection
+    const assignments = await collection.find().toArray(); // Fetch all assignments
 
-    // Fetch all assignments
-    const assignments = await collection.find({}).toArray();
-    res.json(assignments);  // Ensure you're sending JSON here
+    res.json(assignments); // Send assignments as JSON response
   } catch (err) {
-    console.error("Error fetching assignments:", err);
-    res.status(500).json({ message: "Failed to fetch assignments" });
-  } finally {
-    await client.close();
+    console.error('Error fetching assignments:', err);
+    res.status(500).json({ error: 'Failed to fetch assignments' });
   }
 });
 
-app.get("/api/assignments", async (req, res) => {
-  try {
-    await client.connect();
-    const db = client.db(databaseAndAssignmentsCollection.db);
-    const collection = db.collection(databaseAndAssignmentsCollection.collection);
-
-    // Fetch all assignments
-    const assignments = await collection.find({}).toArray();
-    res.json(assignments);  // Ensure you're sending JSON here
-  } catch (err) {
-    console.error("Error fetching assignments:", err);
-    res.status(500).json({ message: "Failed to fetch assignments" });
-  } finally {
-    await client.close();
-  }
-});
 
 app.get("/practice", async (req, res) => {
   try {
@@ -317,39 +296,7 @@ app.post("/api/resources", async (req, res) => {
   }
 });
 
-// Simple health check endpoint
-app.get("/api/health", (req, res) => {
-  res.json({ status: "ok", timestamp: new Date().toISOString() });
+
+app.listen(5173, () => {
+  console.log(`Server listening on http://localhost:5173`);
 });
-
-// Serve static files for client-side application BEFORE the catch-all
-app.use(express.static(path.join(__dirname, 'dist')));
-
-// Handle client-side routing by serving index.html for all other routes
-app.get('*', (req, res) => {
-  // Don't serve HTML for API routes that might be missing
-  if (req.path.startsWith('/api/')) {
-    return res.status(404).json({ error: "API endpoint not found" });
-  }
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
-// Start the server
-const startServer = async () => {
-  try {
-    // Try to connect to MongoDB but don't block server start if it fails
-    await connectToMongoDB().catch(err => {
-      console.warn('Warning: Starting server without MongoDB connection');
-    });
-    
-    app.listen(port, () => {
-      console.log(`Server listening on http://localhost:${port}`);
-      console.log(`API health check available at http://localhost:${port}/api/health`);
-    });
-  } catch (err) {
-    console.error('Failed to start server:', err);
-    process.exit(1);
-  }
-};
-
-startServer();

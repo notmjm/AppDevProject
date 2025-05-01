@@ -14,47 +14,57 @@ function Assignments(){
   useEffect(() => {
     const fetchAssignments = async () => {
       try {
-        setLoading(true);
-        const res = await fetch("http://localhost:5173/api/assignments");
-    
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-    
-        // Check if response is JSON
-        const contentType = res.headers.get("Content-Type");
-        if (contentType && contentType.includes("application/json")) {
+        const res = await fetch("http://localhost:5173/assignments");
+        if (res.ok) {
           const data = await res.json();
-          setAssignments(Array.isArray(data) ? data : []);
+          setAssignments(data); // Set assignments in state
         } else {
-          throw new Error("Expected JSON, but received something else.");
+          throw new Error("Failed to fetch assignments");
         }
       } catch (err) {
         console.error("Error fetching assignments:", err);
         setError("Failed to load assignments. Please try again later.");
-      } finally {
-        setLoading(false);
       }
     };
-    
+  
     fetchAssignments();
   }, []);
 
-  if (loading) return <div>Loading assignments...</div>;
-  if (error) return <div className="error-message">{error}</div>;
-  if (assignments.length === 0) return <div>No assignments found.</div>;
 
   return (
     <div>
       <h1>Assignments</h1>
       <ul>
-        {assignments.map((assignment) => (
-          <li key={assignment._id || assignment.name}>
-            <a href={assignment.url} target="_blank" rel="noopener noreferrer">
-              {assignment.name}
-            </a>
+          <li>Homework 1: <br></br>
+            <ul>
+              <li>Due Date: Februrary 25, 2025 @ 7:00PM</li>
+              <li><a href= "https://forms.gle/MQejHVuzuVzj3uGE7">Link</a></li>
+            </ul>
           </li>
-        ))}
+          <li>Homework 2: <br />
+          <ul>
+              <li>Due Date: March 6, 2025 @ 7:00PM</li>
+              <li><a href= "https://forms.gle/6XVNWAyVc5ADfZxz9">Link</a></li>
+            </ul>
+          </li>
+          <li>Homework 3: <br />
+          <ul>
+              <li>Due Date: March 16, 2025 @ 7:00PM</li>
+              <li><a href= "https://forms.gle/fhbZwTntgESBEY6j8">Link</a></li>
+            </ul>
+          </li>
+          <li>Homework 4: <br />
+          <ul>
+              <li>Due Date: April 3: 2025 @ 7:00PM</li>
+              <li><a href= "https://forms.gle/2bRc93qwD8nwJafu5">Link</a></li>
+            </ul>
+          </li>
+          <li>Homework 5: <br />
+          <ul>
+              <li>Due Date: April 20, 2025 @ 7:00PM</li>
+              <li><a href= "https://forms.gle/65u4Er1kCaEMJioa7">Link</a></li>
+            </ul>
+          </li>
       </ul>
     </div>
   );
