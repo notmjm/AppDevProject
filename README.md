@@ -13,7 +13,7 @@ Simple dashboard that allows bootcamp members to access homework and access read
 
 Molly
 Jaena
-Sourabhi
+Surabhi
 MJ
 Farhan
 Dahn
